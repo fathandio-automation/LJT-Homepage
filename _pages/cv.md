@@ -18,7 +18,6 @@ Education
 Research Experience
 ======
 * Research Intern, MINIMAX (February 2025 – Present)
-  * Research on large language models
 
 * Research Intern, Tencent WXG (June 2024 – September 2024)
   * Advisor: Zifei Shan
@@ -31,17 +30,6 @@ Research Interests
 * LLM Reasoning and Reinforcement Learning
 * Hallucination in Vision-Language Models (VLMs)
 * LLM Truthfulness and Interpretability
-
-Skills
-======
-* Natural Language Processing
-* Machine Learning & Deep Learning
-* Large Language Models (LLMs)
-  * Reasoning & Reinforcement Learning
-  * Truthfulness & Interpretability
-* Vision-Language Models (VLMs)
-* Synthesizing verifiable reasoning data
-* Model evaluation and benchmarking
 
 Publications
 ======
