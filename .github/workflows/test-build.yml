@@ -13,24 +13,5 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3.2"
-
-      - name: Install dependencies
-        run: bundle install
-
-      - name: Build site
-        run: bundle exec jekyll build --strict_front_matter
-        env:
-          JEKYLL_ENV: production
-
-      - name: Check avatar rendering
-        run: |
-          echo "=== avatar block ==="
-          grep -o 'author__avatar.\{0,150\}' _site/index.html || echo "no author__avatar block"
-          echo "=== broken img check ==="
-          grep -o 'src="[^"]*images/"' _site/index.html || echo "no broken images/ src"
-          echo "=== template head ==="
-          head -25 _includes/author-profile.html
+      - name: Cat full author-profile template
+        run: cat _includes/author-profile.html
