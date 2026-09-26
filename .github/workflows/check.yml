@@ -1,0 +1,25 @@
+name: Check
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+      - run: bundle install
+      - run: bundle exec jekyll build --strict_front_matter
+        env:
+          JEKYLL_ENV: production
+      - run: |
+          echo "=== Published in lines ==="
+          grep -o "Published in.\{0,90\}" _site/publications/index.html
+          echo "=== synlogic date check ==="
+          grep -o "date.\{0,40\}" _site/publication/synlogic/index.html || true
