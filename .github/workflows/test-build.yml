@@ -26,28 +26,17 @@ jobs:
         env:
           JEKYLL_ENV: production
 
-      - name: Verify publications page
+      - name: Show publications order
         run: |
-          echo "=== titles found on publications page ==="
-          grep -o "SynLogic[^<\"]*" _site/publications/index.html | head -3
-          grep -o "Perception Bottleneck[^<\"]*" _site/publications/index.html | head -3
-          grep -o "Universal Truthfulness Hyperplane[^<\"]*" _site/publications/index.html | head -3
-          grep -o "In-Context Sharpness[^<\"]*" _site/publications/index.html | head -3
-          grep -o "C-Eval[^<\"]*" _site/publications/index.html | head -3
-          grep -o "Composing Parameter-Efficient[^<\"]*" _site/publications/index.html | head -3
+          echo "=== publication titles in render order ==="
+          grep -o 'archive__item-title[^>]*>.*</a>' _site/publications/index.html | sed 's/<[^>]*>//g' | head -10
           echo "=== Published in lines ==="
           grep -o "Published in <i>[^<]*</i>[^<]*" _site/publications/index.html
-          echo "=== check for 1900 placeholder ==="
-          (grep -n "1900" _site/publications/index.html && echo "FOUND 1900") || echo "no 1900 placeholder"
 
-      - name: Verify about page
+      - name: Show single publication page
         run: |
-          echo "=== about page checks ==="
-          grep -c "Junteng Liu" _site/index.html
-          grep -o "Zhiyuan Honor Scholarship" _site/index.html
-          grep -o "HKUST NLP Group" _site/index.html | head -2
-          grep -o "jliugi@connect.ust.hk" _site/index.html
-          grep -o "SynLogic[^<\"]*" _site/index.html | head -2
-          echo "=== check for template placeholders ==="
-          (grep -n "Your Name" _site/index.html && echo "FOUND Your Name") || echo "no Your Name placeholder"
-          (grep -n "Red Brick University" _site/index.html && echo "FOUND Red Brick") || echo "no Red Brick placeholder"
+          echo "=== synlogic page ==="
+          grep -o "Published in <i>[^<]*</i>[^<]*" _site/publication/synlogic/index.html || true
+          grep -o "Recommended citation: [^<]*" _site/publication/synlogic/index.html | head -1
+          echo "=== check date on single page ==="
+          grep -n "2025-01-01\|January 1\|1900" _site/publication/synlogic/index.html || echo "no fabricated date"
