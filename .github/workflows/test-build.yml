@@ -26,18 +26,11 @@ jobs:
         env:
           JEKYLL_ENV: production
 
-      - name: Show author-profile template
-        run: cat _includes/author-profile.html
-
-      - name: Show sidebar output
+      - name: Check avatar rendering
         run: |
-          echo "=== sidebar avatar block ==="
-          grep -o 'author__avatar.\{0,200\}' _site/index.html | head -2
-          echo "=== about page key facts ==="
-          for term in "Junteng Liu" "HKUST NLP Group" "Junxian He" "Shanghai Jiao Tong University" "June 2024" "Zhiyuan Honor Scholarship" "MINIMAX" "February 2025" "Tencent WXG" "September 2024" "Shanghai AI Lab" "December 2023" "Zifei Shan" "Yu Cheng" "LLM Reasoning" "Hallucination" "truthfulness" "SynLogic" "Perception Bottleneck" "Universal Truthfulness Hyperplane" "In-Context Sharpness" "C-Eval" "Composing Parameter-Efficient" "jliugi@connect.ust.hk" "Vicent0205" "tbK9jl4AAAAJ" "junteng88716710"; do
-            grep -q "$term" _site/index.html && echo "OK: $term" || echo "MISSING: $term"
-          done
-          echo "=== publications page ==="
-          for term in "SynLogic" "Perception Bottleneck" "Universal Truthfulness Hyperplane" "In-Context Sharpness" "C-Eval" "Composing Parameter-Efficient"; do
-            grep -q "$term" _site/publications/index.html && echo "OK: $term" || echo "MISSING: $term"
-          done
+          echo "=== avatar block ==="
+          grep -o 'author__avatar.\{0,150\}' _site/index.html || echo "no author__avatar block"
+          echo "=== broken img check ==="
+          grep -o 'src="[^"]*images/"' _site/index.html || echo "no broken images/ src"
+          echo "=== template head ==="
+          head -25 _includes/author-profile.html
