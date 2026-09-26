@@ -1,0 +1,31 @@
+name: Test site build
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+
+      - name: Test year-only date parsing
+        run: |
+          ruby -e 'require "time"; begin; puts "Time.parse(2025) => #{Time.parse("2025").inspect}"; rescue => e; puts "Time.parse(2025) FAILED: #{e.class}: #{e.message}"; end'
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Build site
+        run: bundle exec jekyll build --strict_front_matter
+        env:
+          JEKYLL_ENV: production
