@@ -18,10 +18,6 @@ jobs:
         with:
           ruby-version: "3.2"
 
-      - name: Test year-only date parsing
-        run: |
-          ruby -e 'require "time"; begin; puts "Time.parse(2025) => #{Time.parse("2025").inspect}"; rescue => e; puts "Time.parse(2025) FAILED: #{e.class}: #{e.message}"; end'
-
       - name: Install dependencies
         run: bundle install
 
@@ -29,3 +25,29 @@ jobs:
         run: bundle exec jekyll build --strict_front_matter
         env:
           JEKYLL_ENV: production
+
+      - name: Verify publications page
+        run: |
+          echo "=== titles found on publications page ==="
+          grep -o "SynLogic[^<\"]*" _site/publications/index.html | head -3
+          grep -o "Perception Bottleneck[^<\"]*" _site/publications/index.html | head -3
+          grep -o "Universal Truthfulness Hyperplane[^<\"]*" _site/publications/index.html | head -3
+          grep -o "In-Context Sharpness[^<\"]*" _site/publications/index.html | head -3
+          grep -o "C-Eval[^<\"]*" _site/publications/index.html | head -3
+          grep -o "Composing Parameter-Efficient[^<\"]*" _site/publications/index.html | head -3
+          echo "=== Published in lines ==="
+          grep -o "Published in <i>[^<]*</i>[^<]*" _site/publications/index.html
+          echo "=== check for 1900 placeholder ==="
+          (grep -n "1900" _site/publications/index.html && echo "FOUND 1900") || echo "no 1900 placeholder"
+
+      - name: Verify about page
+        run: |
+          echo "=== about page checks ==="
+          grep -c "Junteng Liu" _site/index.html
+          grep -o "Zhiyuan Honor Scholarship" _site/index.html
+          grep -o "HKUST NLP Group" _site/index.html | head -2
+          grep -o "jliugi@connect.ust.hk" _site/index.html
+          grep -o "SynLogic[^<\"]*" _site/index.html | head -2
+          echo "=== check for template placeholders ==="
+          (grep -n "Your Name" _site/index.html && echo "FOUND Your Name") || echo "no Your Name placeholder"
+          (grep -n "Red Brick University" _site/index.html && echo "FOUND Red Brick") || echo "no Red Brick placeholder"
