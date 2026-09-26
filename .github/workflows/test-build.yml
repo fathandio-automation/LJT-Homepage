@@ -26,17 +26,22 @@ jobs:
         env:
           JEKYLL_ENV: production
 
-      - name: Show publications order
+      - name: Comprehensive checks
         run: |
-          echo "=== publication titles in render order ==="
-          grep -o 'archive__item-title[^>]*>.*</a>' _site/publications/index.html | sed 's/<[^>]*>//g' | head -10
-          echo "=== Published in lines ==="
-          grep -o "Published in <i>[^<]*</i>[^<]*" _site/publications/index.html
-
-      - name: Show single publication page
-        run: |
-          echo "=== synlogic page ==="
-          grep -o "Published in <i>[^<]*</i>[^<]*" _site/publication/synlogic/index.html || true
-          grep -o "Recommended citation: [^<]*" _site/publication/synlogic/index.html | head -1
-          echo "=== check date on single page ==="
-          grep -n "2025-01-01\|January 1\|1900" _site/publication/synlogic/index.html || echo "no fabricated date"
+          echo "=== About page sections ==="
+          grep -o "About Me\|Academic Background\|Research Experience\|Publications\|Contact" _site/index.html | sort | uniq -c
+          echo "=== Key facts on about page ==="
+          for term in "Junteng Liu" "HKUST NLP Group" "Junxian He" "Shanghai Jiao Tong University" "June 2024" "Zhiyuan Honor Scholarship" "MINIMAX" "February 2025" "Tencent WXG" "September 2024" "Shanghai AI Lab" "December 2023" "Zifei Shan" "Yu Cheng" "LLM Reasoning" "Hallucination" "truthfulness" "SynLogic" "Perception Bottleneck" "Universal Truthfulness Hyperplane" "In-Context Sharpness" "C-Eval" "Composing Parameter-Efficient" "jliugi@connect.ust.hk" "Vicent0205" "tbK9jl4AAAAJ" "junteng88716710"; do
+            grep -q "$term" _site/index.html && echo "OK: $term" || echo "MISSING: $term"
+          done
+          echo "=== Placeholder scan across site ==="
+          for term in "Your Name" "Red Brick" "Paper Title Number" "yourorcidurl" "none@example.org" "bsky.app" "john+snow" "profile.png"; do
+            grep -rn "$term" _site/ && echo "FOUND PLACEHOLDER: $term" || echo "clean: $term"
+          done
+          echo "=== Nav check (only Publications) ==="
+          grep -o 'href="[^"]*publications/"' _site/index.html | head -2
+          grep -c 'Talks\|Teaching\|Portfolio\|Guide' _site/index.html || echo "no extra nav"
+          echo "=== Publications page all six ==="
+          for term in "SynLogic" "Perception Bottleneck" "Universal Truthfulness Hyperplane" "In-Context Sharpness" "C-Eval" "Composing Parameter-Efficient"; do
+            grep -q "$term" _site/publications/index.html && echo "OK: $term" || echo "MISSING: $term"
+          done
