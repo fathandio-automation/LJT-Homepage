@@ -1,15 +1,14 @@
 ---
-title: "On the Universal Truthfulness Hyperplane Inside LLMs"
+title: "Composing Parameter-Efficient Modules with Arithmetic Operations"
 collection: publications
 category: conferences
-permalink: /publication/universal-truthfulness-hyperplane
-excerpt: "LLMs exhibit robust truthfulness along a universal hyperplane in their representations, captured by the orientation of their fixed-point representation vectors."
-date: 2024-01-01
-venue: 'EMNLP 2024'
+permalink: /publication/composing-pem
+excerpt: "Arithmetic composition of parameter-efficient modules yields more expressive parameterization for fine-tuning large language models."
+date: 2023-12-01
+venue: 'NeurIPS 2023'
 slidesurl: 
 paperurl: 
 bibtexurl: 
-citation: 'Shiqi Chen, Yu Cheng, Junteng Liu, Junxian He. (2024). "On the Universal Truthfulness Hyperplane Inside LLMs." In Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing (EMNLP).'
+citation: 'Jinghan Zhang, Shiqi Chen, Junteng Liu, Junxian He. (2023). "Composing Parameter-Efficient Modules with Arithmetic Operations." In Advances in Neural Information Processing Systems (NeurIPS 36).'
 
 ---
-Code: [Universal_Truthfulness_Hyperplane](https://github.com/JuntengLiu/Universal_Truthfulness_Hyperplane).
